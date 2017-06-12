@@ -20,4 +20,6 @@ erl_crash.dump
 *.ez
 
 .ssl
-.*.swp
+*.swp
+*~
+.DS_Store
