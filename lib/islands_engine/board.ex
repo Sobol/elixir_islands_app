@@ -3,6 +3,17 @@ defmodule IslandsEngine.Board do
   def new(), do: %{}
 
   def position_island(board, key, %Island{} = island) do
+    case island_type_correct?(key) do
+      true -> position_non_existing_island(board, key, island)
+      false -> {:error, :non_existing_island_type}
+    end
+  end
+
+  defp island_type_correct?(key) do
+    Enum.any?(Island.types, fn(island_key) -> island_key == key end)
+  end
+
+  defp position_non_existing_island(board, key, %Island{} = island) do
     case overlaps_existing_island?(board, key, island) do
       true -> {:error, :overlapping_island}
       false -> Map.put(board, key, island)
